@@ -18,7 +18,6 @@ install: true
 
 script:
   - travis_wait 30 mvn clean install -DskipTests=true -Dcheckstyle.skip=true -Dmaven.javadoc.skip=true
-  - travis_wait 30 mvn cobertura:cobertura
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
