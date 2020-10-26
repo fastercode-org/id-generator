@@ -1,0 +1,90 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "org.fastercode.idgenerator.spring.starter.IDGeneratorProperties",
+      "name": "id-generator",
+      "type": "org.fastercode.idgenerator.spring.starter.IDGeneratorProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "org.fastercode.idgenerator.core.IDGenDistributedConfig",
+      "name": "id-generator.tag",
+      "type": "java.lang.String",
+      "description": "zk中worker实例 ip后的名称; 一般用在同ip同zk空间下的多个idGen实例"
+    },
+    {
+      "sourceType": "org.fastercode.idgenerator.core.IDGenDistributedConfig",
+      "name": "id-generator.workersBackUpFile",
+      "type": "java.lang.String",
+      "description": "workers 备份的文件路径, 当迁移新的zk时, 会自动将备份恢复到新的zk中; null或空则不备份"
+    },
+    {
+      "sourceType": "org.fastercode.idgenerator.core.IDGenDistributedConfig",
+      "name": "id-generator.workersBackUpInterval",
+      "type": "java.lang.Integer",
+      "description": "workers 多少秒备份一次, <=0 则不备份"
+    },
+    {
+      "sourceType": "org.fastercode.idgenerator.core.IDGenDistributedConfig",
+      "name": "id-generator.minWorkerID",
+      "type": "java.lang.Integer",
+      "description": "workerID 的最小值, 不能小于1"
+    },
+    {
+      "sourceType": "org.fastercode.idgenerator.core.IDGenDistributedConfig",
+      "name": "id-generator.maxWorkerID",
+      "type": "java.lang.Integer",
+      "description": "workerID 的最大值, 不能大于1024"
+    },
+    {
+      "sourceType": "org.fastercode.idgenerator.core.reg.zookeeper.ZookeeperConfiguration",
+      "name": "id-generator.serverLists",
+      "type": "java.lang.String",
+      "description": "连接Zookeeper服务器的列表. 包括IP地址和端口号. 多个地址用逗号分隔. 如: host1:2181,host2:2181"
+    },
+    {
+      "sourceType": "org.fastercode.idgenerator.core.reg.zookeeper.ZookeeperConfiguration",
+      "name": "id-generator.namespace",
+      "type": "java.lang.String",
+      "description": "zk 命名空间"
+    },
+    {
+      "sourceType": "org.fastercode.idgenerator.core.reg.zookeeper.ZookeeperConfiguration",
+      "name": "id-generator.baseSleepTimeMilliseconds",
+      "type": "java.lang.Integer",
+      "description": "等待重试的间隔时间的初始值 (ms)"
+    },
+    {
+      "sourceType": "org.fastercode.idgenerator.core.reg.zookeeper.ZookeeperConfiguration",
+      "name": "id-generator.maxSleepTimeMilliseconds",
+      "type": "java.lang.Integer",
+      "description": "等待重试的间隔时间的最大值 (ms)"
+    },
+    {
+      "sourceType": "org.fastercode.idgenerator.core.reg.zookeeper.ZookeeperConfiguration",
+      "name": "id-generator.maxRetries",
+      "type": "java.lang.Integer",
+      "description": "最大重试次数"
+    },
+    {
+      "sourceType": "org.fastercode.idgenerator.core.reg.zookeeper.ZookeeperConfiguration",
+      "name": "id-generator.sessionTimeoutMilliseconds",
+      "type": "java.lang.Integer",
+      "description": "会话超时时间 (ms)"
+    },
+    {
+      "sourceType": "org.fastercode.idgenerator.core.reg.zookeeper.ZookeeperConfiguration",
+      "name": "id-generator.connectionTimeoutMilliseconds",
+      "type": "java.lang.Integer",
+      "description": "连接超时时间 (ms)"
+    },
+    {
+      "sourceType": "org.fastercode.idgenerator.core.reg.zookeeper.ZookeeperConfiguration",
+      "name": "id-generator.digest",
+      "type": "java.lang.String",
+      "description": "连接Zookeeper的权限令牌. 缺省为不需要权限验证."
+    }
+  ]
+}
