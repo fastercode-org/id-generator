@@ -7,7 +7,7 @@
     <groupId>org.fastercode</groupId>
     <artifactId>id-generator</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <modules>
         <module>id-generator-core</module>
         <module>id-generator-spring-boot-starter</module>
