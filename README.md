@@ -5,3 +5,5 @@
 [![Codecov](https://codecov.io/gh/fastercode-org/id-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/fastercode-org/id-generator/branch/master)
 [![GitHub release](https://img.shields.io/github/v/release/fastercode-org/id-generator)](https://github.com/fastercode-org/id-generator/releases)
 
+![](https://raw.githubusercontent.com/fastercode-org/id-generator/master/id-generator.jpg)
+
