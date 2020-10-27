@@ -23,6 +23,28 @@
         <version>7</version>
     </parent>
 
+    <developers>
+        <developer>
+            <name>huyaolong</name>
+            <email>mail@yaolong.net</email>
+            <url>https://www.yaolong.net</url>
+            <timezone>8</timezone>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>git@github.com:fastercode-org/id-generator.git</url>
+        <connection>scm:git:git@github.com:fastercode-org/id-generator.git</connection>
+        <developerConnection>scm:git:git@github.com:fastercode-org/id-generator.git</developerConnection>
+    </scm>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -167,7 +189,7 @@
                             <format>html</format>
                             <format>xml</format>
                         </formats>
-                        <check />
+                        <check/>
                     </configuration>
                 </plugin>
 
