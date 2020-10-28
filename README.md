@@ -6,7 +6,7 @@
 [![GitHub release](https://img.shields.io/github/v/release/fastercode-org/id-generator)](https://github.com/fastercode-org/id-generator/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/org.fastercode/id-generator)](https://search.maven.org/artifact/org.fastercode/id-generator)
 
-## 基于zk注册workerID的 分布式id生成器
+## 分布式id生成器 (workerID基于zk注册)
 
 ![](https://raw.githubusercontent.com/fastercode-org/id-generator/master/id-generator.jpg)
 
@@ -39,12 +39,44 @@
 
 ```yml
 id-generator:
+  # zk集群
   serverLists: 127.0.0.1:2181
+  # zk命名空间
   namespace: order_id_generator
+  # 本地备份文件路径
   workersBackUpFile: /tmp/order_id_generator.json
+  # 备份间隔时间(秒)
   workersBackUpInterval: 60
+  # workerID池自定义最小值
   minWorkerID: 1
+  # workerID池自定义最大值
   maxWorkerID: 999
+```
+
+### spring-mvc:
+
+```xml
+<!-- pom.xml -->
+<dependency>
+  <groupId>org.fastercode</groupId>
+  <artifactId>id-generator-core</artifactId>
+  <version>${id-generator.version}</version>
+</dependency>
+
+<!-- 注册bean -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+  <bean id="id-generator-conf" class="org.fastercode.idgenerator.core.IDGenDistributedConfig">
+      <property name="serverLists"            value="127.0.0.1:2181"/>
+      <property name="namespace"              value="order_id_generator"/>
+      <property name="workersBackUpFile"      value="/tmp/order_id_generator.json"/>
+      <property name="workersBackUpInterval"  value="60"/>
+      <property name="minWorkerID"            value="1"/>
+      <property name="maxWorkerID"            value="999"/>
+  </bean>
+  <bean class="org.fastercode.idgenerator.core.IDGenDistributed" init-method="init" destroy-method="close">
+      <constructor-arg ref="id-generator-conf"/>
+  </bean>
+</beans>
 ```
 
 **java**
@@ -54,29 +86,7 @@ id-generator:
 private IDGenDistributed idGenDistributed;
 
 public void demo(){
-	ID id = idGenDistributed.generate();
+  ID id = idGenDistributed.generate();
 }
 ```
 
-### spring-mvc:
-
-```xml
-<dependency>
-  <groupId>org.fastercode</groupId>
-  <artifactId>id-generator-core</artifactId>
-  <version>${id-generator.version}</version>
-</dependency>
-
-
-<bean id="id-generator-conf" class="org.fastercode.idgenerator.core.IDGenDistributedConfig">
-    <property name="serverLists"            value="127.0.0.1:2181"/>
-    <property name="namespace"              value="order_id_generator"/>
-    <property name="workersBackUpFile"      value="/tmp/order_id_generator.json"/>
-    <property name="workersBackUpInterval"  value="60"/>
-    <property name="minWorkerID"            value="1"/>
-    <property name="maxWorkerID"            value="999"/>
-</bean>
-<bean class="org.fastercode.idgenerator.core.IDGenDistributed" init-method="init" destroy-method="close">
-    <constructor-arg ref="id-generator-conf"/>
-</bean>
-```
