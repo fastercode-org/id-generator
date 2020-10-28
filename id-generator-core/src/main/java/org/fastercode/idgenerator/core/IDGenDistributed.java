@@ -119,6 +119,11 @@ public class IDGenDistributed {
                 log.warn("分布式ID[{}] gen-worker-id > {}, 回收zk中离线的workers 已完成.", config.getName(), config.getMaxWorkerID());
                 workerID = generatorWorkerIDFromMap(map);
             }
+
+            // check workerID
+            checkWorkerID(workerID);
+
+            // set workerID
             map.put(ip, workerID);
             int finalWorkerID = workerID;
             this.idGenerator = new IDGenerator(() -> finalWorkerID);
@@ -227,6 +232,12 @@ public class IDGenDistributed {
         } catch (Exception ignored) {
         }
         return map;
+    }
+
+    private void checkWorkerID(int workerID) {
+        if (workerID <= 0 || workerID >= 1024) {
+            throw new IDGeneratorException("workerID error.");
+        }
     }
 
     private void duplicateCheck(HashMap map) {
