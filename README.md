@@ -6,13 +6,15 @@
 [![GitHub release](https://img.shields.io/github/v/release/fastercode-org/id-generator)](https://github.com/fastercode-org/id-generator/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/org.fastercode/id-generator)](https://search.maven.org/artifact/org.fastercode/id-generator)
 
-![](https://raw.githubusercontent.com/fastercode-org/id-generator/master/id-generator.jpg)
-
 ## 基于zk注册workerID的 分布式id生成器
 
-### 使用:
+![](https://raw.githubusercontent.com/fastercode-org/id-generator/master/id-generator.jpg)
 
-#### spring-boot:
+---
+
+## 使用
+
+### spring-boot:
 
 **pom.xml**
 
@@ -21,14 +23,14 @@
 <dependency>
   <groupId>org.fastercode</groupId>
   <artifactId>id-generator-spring-boot-starter</artifactId>
-  <version>1.0.2</version>
+  <version>${id-generator.version}</version>
 </dependency>
 
 <!-- spring-boot 2.x -->
 <dependency>
   <groupId>org.fastercode</groupId>
   <artifactId>id-generator-spring-boot2-starter</artifactId>
-  <version>1.0.2</version>
+  <version>${id-generator.version}</version>
 </dependency>
 
 ```
@@ -56,23 +58,23 @@ public void demo(){
 }
 ```
 
-#### spring-mvc:
+### spring-mvc:
 
 ```xml
 <dependency>
   <groupId>org.fastercode</groupId>
   <artifactId>id-generator-core</artifactId>
-  <version>1.0.2</version>
+  <version>${id-generator.version}</version>
 </dependency>
 
 
 <bean id="id-generator-conf" class="org.fastercode.idgenerator.core.IDGenDistributedConfig">
-    <property name="serverLists" 			value="127.0.0.1:2181"/>
-    <property name="namespace" 				value="order_id_generator"/>
-    <property name="workersBackUpFile" 		value="/tmp/order_id_generator.json"/>
-    <property name="workersBackUpInterval" 	value="60"/>
-    <property name="minWorkerID" 			value="1"/>
-    <property name="maxWorkerID" 			value="999"/>
+    <property name="serverLists"            value="127.0.0.1:2181"/>
+    <property name="namespace"              value="order_id_generator"/>
+    <property name="workersBackUpFile"      value="/tmp/order_id_generator.json"/>
+    <property name="workersBackUpInterval"  value="60"/>
+    <property name="minWorkerID"            value="1"/>
+    <property name="maxWorkerID"            value="999"/>
 </bean>
 <bean class="org.fastercode.idgenerator.core.IDGenDistributed" init-method="init" destroy-method="close">
     <constructor-arg ref="id-generator-conf"/>
