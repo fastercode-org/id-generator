@@ -202,6 +202,13 @@ public class IDGenDistributed {
     }
 
     /**
+     * 生成一个分布式 ID, 且包含 extraData
+     */
+    public ID generate(long extraData) {
+        return this.idGenerator.generate(extraData);
+    }
+
+    /**
      * 清理map 回收zk中离线的workers
      */
     private void cleanOfflineWorkerIDs(HashMap<Object, Object> workersMap) throws Exception {
