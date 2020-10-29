@@ -154,7 +154,7 @@ public class IDGenerator {
     /**
      * 从id反解出 创建时间
      */
-    public static Date decodeCreateDateFromId(final long id) {
+    public static Date decodeCreateDateFromLong64(final long id) {
         if (id < (1L << 32L)) {
             return null;
         }
@@ -164,9 +164,9 @@ public class IDGenerator {
     /**
      * 从str反解出 创建时间
      */
-    public static Date decodeCreateDateFromNo(final String no) {
+    public static Date decodeCreateDateFromStr(final String str) {
         try {
-            return dateFormat(DATE_FMT).parse(decodeCreateDateStrFromNo(no));
+            return dateFormat(DATE_FMT).parse(decodeCreateDateStringFromStr(str));
         } catch (ParseException e) {
             log.error("从order_no反解创建时间异常.", e);
             return null;
@@ -176,25 +176,25 @@ public class IDGenerator {
     /**
      * 从str反解出 创建时间字符串
      */
-    public static String decodeCreateDateStrFromNo(final String no) {
-        if (no == null || no.length() < 12) {
+    public static String decodeCreateDateStringFromStr(final String str) {
+        if (str == null || str.length() < 12) {
             return null;
         }
 
         int pos = 0;
-        for (int i = 0; i < no.length(); i++) {
-            int c = no.charAt(i);
+        for (int i = 0; i < str.length(); i++) {
+            int c = str.charAt(i);
             if (c >= '0' && c <= '9') {
                 pos = i;
                 break;
             }
         }
 
-        if (no.length() - pos < 12) {
+        if (str.length() - pos < 12) {
             return null;
         }
 
-        return no.substring(pos, pos + 12);
+        return str.substring(pos, pos + 12);
     }
 
     private static SimpleDateFormat dateFormat(String fmt) {
