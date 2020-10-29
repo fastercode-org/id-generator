@@ -51,7 +51,7 @@ public class IDGenDistributed {
     @Setter(AccessLevel.PROTECTED)
     private String ip;
 
-    @Getter(AccessLevel.PROTECTED)
+    @Getter(AccessLevel.PUBLIC)
     private int workerID;
 
     @Getter(AccessLevel.PUBLIC)
