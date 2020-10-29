@@ -6,7 +6,7 @@
 [![GitHub release](https://img.shields.io/github/v/release/fastercode-org/id-generator)](https://github.com/fastercode-org/id-generator/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/org.fastercode/id-generator)](https://search.maven.org/artifact/org.fastercode/id-generator)
 
-## 分布式id生成器 (workerID基于zk注册)
+## 分布式id生成器 (workerID基于zk初始化)
 
 ![](https://raw.githubusercontent.com/fastercode-org/id-generator/master/id-generator.jpg)
 
