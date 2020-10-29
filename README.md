@@ -79,14 +79,28 @@ id-generator:
 </beans>
 ```
 
-**java**
+### Code
 
 ```java
 @Autowired
 private IDGenDistributed idGenDistributed;
 
-public void demo(){
+public void Demo(){
+  // 生成一个分布式ID实体
   ID id = idGenDistributed.generate();
+
+  // 从long64订单号中反解 创建时间
+  Date createDate = IDGenerator.decodeCreateDateFromLong64(id.getLong64());
+
+  // 从long64订单号中反解 实例ID
+  long workerID   = IDGenerator.decodeWorkerIdFromId(id.getLong64());
+
+  // 从long64订单号中反解 附加数据
+  long extraData  = IDGenerator.decodeExtraDataFromId(id.getLong64());
+
+  // 从str订单号中反解 创建时间
+  Date createDate = IDGenerator.decodeCreateDateFromStr(id.getStr());
 }
 ```
+
 
