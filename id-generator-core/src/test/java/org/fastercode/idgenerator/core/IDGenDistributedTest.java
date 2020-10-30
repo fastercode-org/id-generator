@@ -4,11 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Ignore;
+import org.junit.Test;
 
 @Slf4j
 public class IDGenDistributedTest {
 
-    // @Test
+    @Test
+    @Ignore
     @SneakyThrows
     public void test() {
         IDGenDistributedConfig idConfig = new IDGenDistributedConfig();

@@ -2,13 +2,18 @@
 
 [![Build Status](https://travis-ci.org/fastercode-org/id-generator.svg?branch=master)](https://travis-ci.org/fastercode-org/id-generator)
 [![Codecov](https://codecov.io/gh/fastercode-org/id-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/fastercode-org/id-generator/branch/master)
-[![License](https://img.shields.io/github/license/fastercode-org/id-generator)](https://github.com/fastercode-org/id-generator)
+[![License](https://img.shields.io/github/license/fastercode-org/id-generator)](https://github.com/fastercode-org/id-generator/blob/master/LICENSE.txt)
+[![JDK8+](https://img.shields.io/badge/JDK-8+-green.svg)](https://www.oracle.com/technetwork/java/javase/downloads/index.html)
 [![GitHub release](https://img.shields.io/github/v/release/fastercode-org/id-generator)](https://github.com/fastercode-org/id-generator/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/org.fastercode/id-generator)](https://search.maven.org/artifact/org.fastercode/id-generator)
 
 ## 分布式id生成器 (workerID基于zk初始化)
 
 ![](https://raw.githubusercontent.com/fastercode-org/id-generator/master/id-generator.jpg)
+
+- **workerID**   是不同实例在ID中的唯一标识, 基于zk初始化获取或注册.
+- **extraData**  是附加在ID中的额外数据, 如附加用户ID取模的余数, 可用于定位按取模划分的库表.
+- **createDate** ID的生成时间, 与`long64` `str` `strWithExtraData` 中包含的时间一致, 可用于定位按时间划分的库表.
 
 ---
 

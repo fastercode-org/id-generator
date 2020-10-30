@@ -8,6 +8,8 @@ import org.apache.curator.framework.recipes.locks.InterProcessLock;
 import org.fastercode.idgenerator.core.reg.zookeeper.ZookeeperConfiguration;
 import org.fastercode.idgenerator.core.reg.zookeeper.ZookeeperRegistryCenter;
 import org.fastercode.idgenerator.core.util.IPUtil;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
@@ -17,7 +19,8 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class ZKTest {
-    // @Test
+    @Test
+    @Ignore
     @SneakyThrows
     public void testTmp() {
         ZookeeperConfiguration configuration = new ZookeeperConfiguration();
@@ -32,7 +35,8 @@ public class ZKTest {
         zk.close();
     }
 
-    // @Test
+    @Test
+    @Ignore
     @SneakyThrows
     public void testZK() {
         ZookeeperConfiguration configuration = new ZookeeperConfiguration();
