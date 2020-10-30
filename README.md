@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/github/license/fastercode-org/id-generator)](https://github.com/fastercode-org/id-generator/blob/master/LICENSE.txt)
 [![JDK8+](https://img.shields.io/badge/JDK-8+-green.svg)](https://www.oracle.com/technetwork/java/javase/downloads/index.html)
 [![GitHub release](https://img.shields.io/github/v/release/fastercode-org/id-generator)](https://github.com/fastercode-org/id-generator/releases)
-[![Maven Central](https://img.shields.io/maven-central/v/org.fastercode/id-generator)](https://search.maven.org/artifact/org.fastercode/id-generator)
+[![Maven Central](https://img.shields.io/maven-central/v/org.fastercode/id-generator)](https://mvnrepository.com/search?q=id-generator&d=org.fastercode)
 
 ## 分布式id生成器 (workerID基于zk初始化)
 
