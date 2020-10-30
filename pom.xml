@@ -57,7 +57,7 @@
         <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
         <curator.version>2.10.0</curator.version>
         <fastjson.version>1.2.69</fastjson.version>
-        <junit.version>4.11</junit.version>
+        <junit.version>4.12</junit.version>
     </properties>
 
     <dependencyManagement>
@@ -187,6 +187,15 @@
                 <javadoc.opts>-Xdoclint:none</javadoc.opts>
             </properties>
         </profile>
+        <profile>
+            <id>java8-jacoco-disabled</id>
+            <activation>
+                <jdk>[1.9,)</jdk>
+            </activation>
+            <properties>
+                <jacoco.skip.opts>true</jacoco.skip.opts>
+            </properties>
+        </profile>
     </profiles>
 
     <build>
@@ -277,11 +286,17 @@
                 <version>0.7.9</version>
                 <executions>
                     <execution>
+                        <configuration>
+                            <skip>${jacoco.skip.opts}</skip>
+                        </configuration>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
                     <execution>
+                        <configuration>
+                            <skip>${jacoco.skip.opts}</skip>
+                        </configuration>
                         <id>report</id>
                         <phase>test</phase>
                         <goals>
