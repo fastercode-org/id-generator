@@ -11,9 +11,31 @@ import org.junit.Test;
 public class IDGenDistributedTest {
 
     @Test
-    @Ignore
     @SneakyThrows
     public void test() {
+        IDGenDistributedConfig idConfig = new IDGenDistributedConfig();
+        idConfig.setServerLists("serverList");
+        idConfig.setNamespace("namespace");
+        idConfig.setWorkersBackUpFile("/tmp/x");
+        idConfig.setWorkersBackUpInterval(1);
+        idConfig.setMinWorkerID(301);
+        idConfig.setMaxWorkerID(303);
+        idConfig.setConnectionTimeoutMilliseconds(1);
+        idConfig.setSessionTimeoutMilliseconds(1);
+        idConfig.setMaxRetries(0);
+
+        IDGenDistributed idGen = new IDGenDistributed(idConfig);
+        try {
+            idGen.init();
+        } catch (Exception ignore) {
+        }
+        idGen.close();
+    }
+
+    @Test
+    @Ignore
+    @SneakyThrows
+    public void testWithZK() {
         IDGenDistributedConfig idConfig = new IDGenDistributedConfig();
         idConfig.setServerLists("localhost:2181");
         idConfig.setNamespace("id-gen-test");
