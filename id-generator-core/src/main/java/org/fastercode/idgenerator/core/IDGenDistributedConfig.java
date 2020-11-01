@@ -11,9 +11,6 @@ import org.fastercode.idgenerator.core.reg.zookeeper.ZookeeperConfiguration;
 @Setter
 public class IDGenDistributedConfig extends ZookeeperConfiguration {
 
-    /**
-     * bean的名称, 备份线程的名称
-     */
     private String name = "idGenDistributed";
 
     /**
