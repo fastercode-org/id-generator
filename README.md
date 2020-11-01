@@ -24,20 +24,11 @@
 **pom.xml**
 
 ```xml
-<!-- spring-boot 1.x -->
 <dependency>
   <groupId>org.fastercode</groupId>
   <artifactId>id-generator-spring-boot-starter</artifactId>
   <version>${id-generator.version}</version>
 </dependency>
-
-<!-- spring-boot 2.x -->
-<dependency>
-  <groupId>org.fastercode</groupId>
-  <artifactId>id-generator-spring-boot2-starter</artifactId>
-  <version>${id-generator.version}</version>
-</dependency>
-
 ```
 
 **application.yml**
