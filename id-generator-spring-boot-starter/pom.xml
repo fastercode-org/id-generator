@@ -7,11 +7,12 @@
     <artifactId>id-generator-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
     <url>http://id-generator.fastercode.org</url>
+    <description>Distributed ID generator, workerID is initialized based on zookeeper.</description>
 
     <parent>
         <groupId>org.fastercode</groupId>
         <artifactId>id-generator</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
     </parent>
 
     <dependencies>
