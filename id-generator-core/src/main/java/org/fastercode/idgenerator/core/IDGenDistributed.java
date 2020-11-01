@@ -74,15 +74,9 @@ public class IDGenDistributed {
     }
 
     public void init() throws Exception {
-        if (this.config == null) {
-            log.warn("分布式ID 未初始化. ({})", "IDGenDistributedConfig==null");
+        if (Strings.isNullOrEmpty(config.getServerLists()) || Strings.isNullOrEmpty(config.getNamespace())) {
+            log.warn("分布式ID 初始化未完成. serverLists and namespace can not be empty.");
             return;
-        } else {
-            log.info("IDGenDistributedConfig:\n{}", JSON.toJSONString(this.config, SerializerFeature.PrettyFormat));
-        }
-
-        if (Strings.isNullOrEmpty(this.config.getName())) {
-            throw new IDGeneratorException("分布式ID[" + config.getName() + "] 已初始化失败! name 不能为空.");
         }
 
         if (this.config.getMinWorkerID() >= this.config.getMaxWorkerID()) {
@@ -94,6 +88,7 @@ public class IDGenDistributed {
             return;
         }
 
+        log.info("IDGenDistributedConfig:\n{}", JSON.toJSONString(this.config, SerializerFeature.PrettyFormat));
         // init zk
         zk.init();
 
