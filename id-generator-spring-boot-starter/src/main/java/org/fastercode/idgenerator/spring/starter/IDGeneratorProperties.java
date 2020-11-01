@@ -1,8 +1,8 @@
 package org.fastercode.idgenerator.spring.starter;
 
-import lombok.Data;
 import org.fastercode.idgenerator.core.IDGenDistributedConfig;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Data
+@ConfigurationProperties(prefix = "id-generator")
 public class IDGeneratorProperties extends IDGenDistributedConfig {
 }

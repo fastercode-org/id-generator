@@ -1,6 +1,7 @@
 package org.fastercode.idgenerator.core;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.base.Strings;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.AccessLevel;
@@ -73,9 +74,11 @@ public class IDGenDistributed {
     }
 
     public void init() throws Exception {
-        if (!hasInit.compareAndSet(false, true)) {
-            log.warn("分布式ID[{}] 已初始化, 不能重复初始化.", config.getName());
+        if (this.config == null) {
+            log.warn("分布式ID 未初始化. ({})", "IDGenDistributedConfig==null");
             return;
+        } else {
+            log.info("IDGenDistributedConfig:\n{}", JSON.toJSONString(this.config, SerializerFeature.PrettyFormat));
         }
 
         if (Strings.isNullOrEmpty(this.config.getName())) {
@@ -84,6 +87,11 @@ public class IDGenDistributed {
 
         if (this.config.getMinWorkerID() >= this.config.getMaxWorkerID()) {
             throw new IDGeneratorException("minWorkerID can not greater than or equal maxWorkerID!");
+        }
+
+        if (!hasInit.compareAndSet(false, true)) {
+            log.warn("分布式ID[{}] 已初始化, 不能重复初始化.", config.getName());
+            return;
         }
 
         // init zk
