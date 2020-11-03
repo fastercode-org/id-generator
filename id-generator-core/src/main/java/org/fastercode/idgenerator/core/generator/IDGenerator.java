@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 /**
+ * 分布式ID生成器
  * @author huyaolong
  */
 public interface IDGenerator {
