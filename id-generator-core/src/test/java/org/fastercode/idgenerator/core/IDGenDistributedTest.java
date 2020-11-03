@@ -65,16 +65,19 @@ public class IDGenDistributedTest {
             Assert.assertEquals(workerID, min);
         }
         // test gap
+        HashMap map = new HashMap() {{
+            put("a", "11");
+            put("b", "15");
+            put("c", "16");
+        }};
         IDGenDistributed idGen = new IDGenDistributed(new IDGenDistributedConfig() {{
             setMinWorkerID(11);
             setMaxWorkerID(15);
         }});
-        int workerID = idGen.generatorWorkerIDFromMap(new HashMap() {{
-            put("a", "11");
-            put("b", "15");
-            put("c", "16");
-        }});
-        Assert.assertEquals(workerID, 12);
+        Assert.assertEquals(idGen.generatorWorkerIDFromMap(null), 11);
+        Assert.assertEquals(idGen.generatorWorkerIDFromMap(map), 12);
+        idGen.setIp("b");
+        Assert.assertEquals(idGen.generatorWorkerIDFromMap(map), 15);
     }
 
     @Test
