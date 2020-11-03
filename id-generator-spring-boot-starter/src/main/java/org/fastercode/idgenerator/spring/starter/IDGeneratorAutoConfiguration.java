@@ -23,10 +23,10 @@ public class IDGeneratorAutoConfiguration {
     @Autowired(required = false)
     private IDGeneratorProperties idGeneratorProperties;
 
-    @Bean(initMethod = "init", destroyMethod = "close")
     @Lazy(value = false)
     @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
     @ConditionalOnMissingBean({IDGenDistributed.class})
+    @Bean(initMethod = "init", destroyMethod = "close", name = "idGenerator")
     public IDGenerator idGenDistributed() {
         return new IDGenDistributed(this.idGeneratorProperties);
     }
