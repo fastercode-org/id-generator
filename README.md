@@ -79,24 +79,22 @@ id-generator:
 
 ```java
 @Autowired
-private IDGenDistributed idGenDistributed;
+private IDGenerator idGenerator;
 
 public void Demo(){
   // 生成一个分布式ID实体
-  ID id = idGenDistributed.generate();
+  ID id = idGenerator.generate();
 
   // 从long64订单号中反解 创建时间
-  Date createDate = IDGenerator.decodeCreateDateFromLong64(id.getLong64());
+  Date createDate = idGenerator.decodeCreateDateFromLong64(id.getLong64());
 
   // 从long64订单号中反解 实例ID
-  long workerID   = IDGenerator.decodeWorkerIdFromId(id.getLong64());
+  long workerID   = idGenerator.decodeWorkerIdFromId(id.getLong64());
 
   // 从long64订单号中反解 附加数据
-  long extraData  = IDGenerator.decodeExtraDataFromId(id.getLong64());
+  long extraData  = idGenerator.decodeExtraDataFromId(id.getLong64());
 
   // 从str订单号中反解 创建时间
-  Date createDate = IDGenerator.decodeCreateDateFromStr(id.getStr());
+  Date createDate = idGenerator.decodeCreateDateFromStr(id.getStr());
 }
 ```
-
-

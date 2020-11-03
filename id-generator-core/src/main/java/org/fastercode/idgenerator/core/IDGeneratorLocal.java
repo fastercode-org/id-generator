@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.LongSupplier;
 
 /**
- * 分布式订单号生成器
+ * 订单号生成器
  *
  * @author huyaolong
  */
