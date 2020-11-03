@@ -53,6 +53,7 @@ public class IDGenDistributed implements IDGenerator {
     private int workerID;
 
     @Getter(AccessLevel.PROTECTED)
+    @Setter(AccessLevel.PROTECTED)
     private IDGenerator idGeneratorRaw;
 
     private ScheduledExecutorService idWorkersBackUpScheduled;
@@ -63,10 +64,12 @@ public class IDGenDistributed implements IDGenerator {
         this.config = config;
         this.zk = new ZookeeperRegistryCenter(config);
 
-        if (Strings.isNullOrEmpty(config.getTag())) {
-            this.ip = IPUtil.getLocalAddress();
-        } else {
-            this.ip = IPUtil.getLocalAddress() + "@" + config.getTag();
+        if (config != null) {
+            if (Strings.isNullOrEmpty(config.getTag())) {
+                this.ip = IPUtil.getLocalAddress();
+            } else {
+                this.ip = IPUtil.getLocalAddress() + "@" + config.getTag();
+            }
         }
     }
 
@@ -295,7 +298,7 @@ public class IDGenDistributed implements IDGenerator {
      * or
      * return a gap val from min to max;
      */
-    private int generatorWorkerIDFromMap(HashMap map) {
+    protected int generatorWorkerIDFromMap(HashMap map) {
         int gap = this.config.getMinWorkerID();
         if (map == null || map.size() == 0) {
             return gap;
