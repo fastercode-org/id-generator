@@ -60,9 +60,9 @@ public class IDGeneratorLocal implements IDGenerator {
 
     private final LongSupplier workerIdSupplier;
 
-    private long lastSeconds = 0L;
-    private long lastTimeMillis = 0L;
-    private long sequence = 0L;
+    private volatile long lastSeconds = 0L;
+    private volatile long lastTimeMillis = 0L;
+    private volatile long sequence = 0L;
 
     /**
      * 实例化一个ID生成器, workerId=IP后三位
