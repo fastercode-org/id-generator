@@ -19,7 +19,7 @@
 
 ## 使用
 
-### spring-boot:
+### spring-boot (1.x/2.x) :
 
 **pom.xml**
 
