@@ -54,7 +54,7 @@ public class IDGenDistributedTest {
                 log.error("id-gen 初始化失败: {}", e.getMessage(), e);
             }
 
-            log.warn("生成ID [{}] = [{}]", i, idGen.getIdGenerator().generate());
+            log.warn("生成ID [{}] = [{}]", i, idGen.getIdGeneratorRaw().generate());
             log.warn("在线的workers: \n{}", JSON.toJSONString(idGen.getOnlineWorkerIDs(), SerializerFeature.PrettyFormat));
             Thread.sleep(3000L);
             idGen.close();

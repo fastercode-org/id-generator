@@ -18,10 +18,7 @@ import org.fastercode.idgenerator.core.util.FileUtil;
 import org.fastercode.idgenerator.core.util.IPUtil;
 import org.fastercode.idgenerator.core.util.MapUtil;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author huyaolong
  */
 @Slf4j
-public class IDGenDistributed {
+public class IDGenDistributed implements IDGenerator {
 
     private static final String zkLockPath = "/id-generator-lock";
     private static final String zkOnlinePath = "/id-generator-online";
@@ -55,8 +52,8 @@ public class IDGenDistributed {
     @Getter(AccessLevel.PUBLIC)
     private int workerID;
 
-    @Getter(AccessLevel.PUBLIC)
-    private IDGenerator idGenerator;
+    @Getter(AccessLevel.PROTECTED)
+    private IDGenerator idGeneratorRaw;
 
     private ScheduledExecutorService idWorkersBackUpScheduled;
 
@@ -73,6 +70,7 @@ public class IDGenDistributed {
         }
     }
 
+    @Override
     public void init() throws Exception {
         if (Strings.isNullOrEmpty(config.getServerLists()) || Strings.isNullOrEmpty(config.getNamespace())) {
             log.warn("分布式ID 初始化未完成. serverLists and namespace can not be empty.");
@@ -129,7 +127,7 @@ public class IDGenDistributed {
             // set workerID
             map.put(ip, workerID);
             int finalWorkerID = workerID;
-            this.idGenerator = new IDGenerator(() -> finalWorkerID);
+            this.idGeneratorRaw = new IDGeneratorLocal(() -> finalWorkerID);
 
             // check duplicate
             duplicateCheck(map);
@@ -176,6 +174,7 @@ public class IDGenDistributed {
         }
     }
 
+    @Override
     public void close() {
         try {
             idWorkersBackUpScheduled.shutdown();
@@ -190,25 +189,52 @@ public class IDGenDistributed {
             }
         }
         this.zk.close();
-        this.idGenerator = null;
+        this.idGeneratorRaw = null;
         this.idWorkersBackUpScheduled = null;
         this.hasInit.set(false);
 
         log.info("分布式ID生成器[{}] close success.", config.getName());
     }
 
+    @Override
+    public long decodeWorkerIdFromId(long id) {
+        return this.getIdGeneratorRaw().decodeWorkerIdFromId(id);
+    }
+
+    @Override
+    public long decodeExtraDataFromId(long id) {
+        return this.getIdGeneratorRaw().decodeExtraDataFromId(id);
+    }
+
+    @Override
+    public Date decodeCreateDateFromLong64(long id) {
+        return this.getIdGeneratorRaw().decodeCreateDateFromLong64(id);
+    }
+
+    @Override
+    public Date decodeCreateDateFromStr(String str) {
+        return this.getIdGeneratorRaw().decodeCreateDateFromStr(str);
+    }
+
+    @Override
+    public String decodeCreateDateStringFromStr(String str) {
+        return this.getIdGeneratorRaw().decodeCreateDateStringFromStr(str);
+    }
+
     /**
      * 生成一个分布式 ID
      */
+    @Override
     public ID generate() {
-        return this.idGenerator.generate();
+        return this.idGeneratorRaw.generate();
     }
 
     /**
      * 生成一个分布式 ID, 且包含 extraData
      */
+    @Override
     public ID generate(long extraData) {
-        return this.idGenerator.generate(extraData);
+        return this.idGeneratorRaw.generate(extraData);
     }
 
     /**
@@ -235,6 +261,7 @@ public class IDGenDistributed {
     /**
      * 获取在线的 workerIDs map
      */
+    @Override
     public HashMap<Object, Object> getOnlineWorkerIDs() {
         HashMap<Object, Object> map = JSON.parseObject(this.zk.getDirectly(zkWorkersPath), HashMap.class);
         try {
