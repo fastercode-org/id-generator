@@ -1,6 +1,7 @@
 package org.fastercode.idgenerator.spring.starter;
 
 import org.fastercode.idgenerator.core.IDGenDistributed;
+import org.fastercode.idgenerator.core.generator.IDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -22,11 +23,11 @@ public class IDGeneratorAutoConfiguration {
     @Autowired(required = false)
     private IDGeneratorProperties idGeneratorProperties;
 
-    @Bean(initMethod = "init", destroyMethod = "close")
     @Lazy(value = false)
     @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
     @ConditionalOnMissingBean({IDGenDistributed.class})
-    public IDGenDistributed idGenDistributed() {
+    @Bean(initMethod = "init", destroyMethod = "close", name = "idGenerator")
+    public IDGenerator idGenDistributed() {
         return new IDGenDistributed(this.idGeneratorProperties);
     }
 }
