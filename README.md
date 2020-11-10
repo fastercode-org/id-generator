@@ -11,10 +11,12 @@
 
 ![](https://raw.githubusercontent.com/fastercode-org/id-generator/master/id-generator.jpg)
 
-- **workerID**   是不同实例在ID中的唯一标识, 基于zk初始化获取或注册.
-- **extraData**  是附加在ID中的额外数据, 如附加用户ID取模的余数, 可用于定位按取模划分的库表.
-- **createDate** ID的生成时间, 与`long64` `str` `strWithExtraData` 中包含的时间一致, 可用于定位按时间划分的库表.
+- **sequence**   [多线程安全] 单位时间内(秒) 的自增序列值.
+- **workerID**   [分布式特性] 不同实例在ID中的唯一标识, 基于zk初始化获取或注册.
+- **extraData**  [分库分表支持] 附加在ID中的额外数据, 如附加用户ID取模的余数, 可用于定位按取模划分的库表.
+- **createDate** [分库分表支持] ID的生成时间, 与`long64` `str` `strWithExtraData` 中包含的时间一致, 可用于定位按时间划分的库表.
 
+- **时钟回拨优化** 如果时钟回拨大于500ms, 生成ID时将抛出异常; 否则线程将挂起等待若干毫秒以确保生成正确的ID.
 ---
 
 ## 使用
