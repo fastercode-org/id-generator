@@ -82,8 +82,12 @@ id-generator:
   <artifactId>id-generator-core</artifactId>
   <version>${id-generator.version}</version>
 </dependency>
+```
 
-<!-- 注册bean -->
+- 注册bean
+
+```xml
+<!-- src/main/webapp/WEB-INF/spring/applicationContext.xml -->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
   <bean id="id-generator-conf" class="org.fastercode.idgenerator.core.IDGenDistributedConfig">
       <property name="serverLists"            value="127.0.0.1:2181"/>
