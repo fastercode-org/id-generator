@@ -21,9 +21,29 @@
 
 ## 使用
 
+- 添加Maven仓库
+
+```xml
+<repositories>
+  <repository>
+    <id>sonatype-nexus-staging</id>
+    <name>Sonatype Nexus Staging</name>
+    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    <releases>
+        <enabled>true</enabled>
+    </releases>
+    <snapshots>
+        <enabled>true</enabled>
+    </snapshots>
+  </repository>
+</repositories>
+```
+
 ### spring-boot (1.x/2.x) :
 
 **pom.xml**
+
+- 添加依赖
 
 ```xml
 <dependency>
@@ -52,6 +72,8 @@ id-generator:
 ```
 
 ### spring-mvc:
+
+- 添加依赖
 
 ```xml
 <!-- pom.xml -->
