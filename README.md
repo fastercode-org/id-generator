@@ -24,6 +24,7 @@
 - 添加Maven仓库
 
 ```xml
+<!-- pom.xml -->
 <repositories>
   <repository>
     <id>sonatype-nexus-staging</id>
@@ -41,11 +42,10 @@
 
 ### spring-boot (1.x/2.x) :
 
-**pom.xml**
-
 - 添加依赖
 
 ```xml
+<!-- pom.xml -->
 <dependency>
   <groupId>org.fastercode</groupId>
   <artifactId>id-generator-spring-boot-starter</artifactId>
