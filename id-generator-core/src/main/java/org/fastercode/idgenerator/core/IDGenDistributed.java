@@ -44,7 +44,8 @@ public class IDGenDistributed implements IDGenerator {
     private final IDGenDistributedConfig config;
 
     @Getter(AccessLevel.PROTECTED)
-    private final ZookeeperRegistryCenter zk;
+    @Setter(AccessLevel.PROTECTED)
+    private ZookeeperRegistryCenter zk;
 
     @Getter(AccessLevel.PROTECTED)
     @Setter(AccessLevel.PROTECTED)

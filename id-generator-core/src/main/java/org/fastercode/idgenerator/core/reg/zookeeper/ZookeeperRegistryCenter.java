@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  * 基于Zookeeper的注册中心.
  */
 @Slf4j
-public final class ZookeeperRegistryCenter implements CoordinatorRegistryCenter {
+public class ZookeeperRegistryCenter implements CoordinatorRegistryCenter {
 
     @Getter(AccessLevel.PROTECTED)
     private ZookeeperConfiguration zkConfig;

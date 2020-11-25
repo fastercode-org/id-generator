@@ -5,12 +5,18 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.curator.framework.recipes.locks.InterProcessLock;
 import org.fastercode.idgenerator.core.generator.ID;
+import org.fastercode.idgenerator.core.reg.zookeeper.ZookeeperConfiguration;
+import org.fastercode.idgenerator.core.reg.zookeeper.ZookeeperRegistryCenter;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class IDGenDistributedTest {
@@ -30,9 +36,12 @@ public class IDGenDistributedTest {
         idConfig.setMaxRetries(0);
 
         IDGenDistributed idGen = new IDGenDistributed(idConfig);
+        idGen.setZk(Mockito.spy(new ZookeeperRegistryCenterSpy(null)));
         try {
             idGen.init();
+            Thread.sleep(2000L);
         } catch (Exception ignore) {
+            ignore.printStackTrace();
         }
         idGen.close();
     }
@@ -146,4 +155,132 @@ public class IDGenDistributedTest {
         idGen2.close();
 
     }
+
+    private class ZookeeperRegistryCenterSpy extends ZookeeperRegistryCenter {
+
+        public ZookeeperRegistryCenterSpy(ZookeeperConfiguration zkConfig) {
+            super(zkConfig);
+        }
+
+        @Override
+        public InterProcessLock lock(String key) {
+            return new InterProcessLock() {
+                @Override
+                public void acquire() throws Exception {
+
+                }
+
+                @Override
+                public boolean acquire(long l, TimeUnit timeUnit) throws Exception {
+                    return true;
+                }
+
+                @Override
+                public void release() throws Exception {
+
+                }
+
+                @Override
+                public boolean isAcquiredInThisProcess() {
+                    return true;
+                }
+            };
+        }
+
+        @Override
+        public void unlock(InterProcessLock lock) {
+
+        }
+
+        @Override
+        public String getDirectly(String key) {
+            return null;
+        }
+
+        @Override
+        public List<String> getChildrenKeys(String key) {
+            return null;
+        }
+
+        @Override
+        public int getNumChildren(String key) {
+            return 0;
+        }
+
+        @Override
+        public void persistEphemeral(String key, String value) {
+
+        }
+
+        @Override
+        public String persistSequential(String key, String value) {
+            return null;
+        }
+
+        @Override
+        public void persistEphemeralSequential(String key) {
+
+        }
+
+        @Override
+        public void addCacheData(String cachePath) {
+
+        }
+
+        @Override
+        public void evictCacheData(String cachePath) {
+
+        }
+
+        @Override
+        public Object getRawCache(String cachePath) {
+            return null;
+        }
+
+        @Override
+        public void init() {
+
+        }
+
+        @Override
+        public void close() {
+
+        }
+
+        @Override
+        public String get(String key) {
+            return null;
+        }
+
+        @Override
+        public boolean isExisted(String key) {
+            return true;
+        }
+
+        @Override
+        public void persist(String key, String value) {
+
+        }
+
+        @Override
+        public void update(String key, String value) {
+
+        }
+
+        @Override
+        public void remove(String key) {
+
+        }
+
+        @Override
+        public long getRegistryCenterTime(String key) {
+            return 0;
+        }
+
+        @Override
+        public Object getRawClient() {
+            return null;
+        }
+    }
+
 }
