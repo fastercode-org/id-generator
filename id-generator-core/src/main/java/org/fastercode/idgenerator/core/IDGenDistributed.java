@@ -145,19 +145,17 @@ public class IDGenDistributed implements IDGenerator {
         }
 
         // start running ping scheduled
-        runningPingScheduled = Executors.newSingleThreadScheduledExecutor(
-                new ThreadFactoryBuilder()
-                        .setNameFormat("id-generator-running-ping-" + this.config.getName() + "-%d")
-                        .setDaemon(true).build()
+        runningPingScheduled = Executors.newSingleThreadScheduledExecutor(new ThreadFactoryBuilder()
+                .setNameFormat("id-generator-running-ping-" + this.config.getName() + "-%d")
+                .setDaemon(true).build()
         );
         runningPingScheduled.scheduleAtFixedRate(this::doRunningPingScheduled, 0, 1, TimeUnit.SECONDS);
 
         // start backup scheduled
         if (this.config.getWorkersBackUpInterval() > 0) {
-            idWorkersBackUpScheduled = Executors.newSingleThreadScheduledExecutor(
-                    new ThreadFactoryBuilder()
-                            .setNameFormat("id-generator-back-" + this.config.getName() + "-%d")
-                            .setDaemon(true).build()
+            idWorkersBackUpScheduled = Executors.newSingleThreadScheduledExecutor(new ThreadFactoryBuilder()
+                    .setNameFormat("id-generator-back-" + this.config.getName() + "-%d")
+                    .setDaemon(true).build()
             );
             idWorkersBackUpScheduled.scheduleAtFixedRate(
                     this::doIdWorkersBackUpScheduled,
@@ -174,9 +172,10 @@ public class IDGenDistributed implements IDGenerator {
             String node = zkOnlinePath + "/" + this.ip + zkRunning;
             if (!this.zk.isExisted(node)) {
                 this.zk.persistEphemeral(node, String.valueOf(System.currentTimeMillis()));
+                log.info("分布式ID[{}] running-ping success.", config.getName());
             }
         } catch (Exception e) {
-            log.warn("分布式ID[{}] running-ping 异常: {}", config.getName(), e.getMessage(), e);
+            log.warn("分布式ID[{}] running-ping fail: {}", config.getName(), e.getMessage(), e);
         }
     }
 
