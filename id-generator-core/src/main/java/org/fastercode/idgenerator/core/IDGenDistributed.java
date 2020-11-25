@@ -19,6 +19,7 @@ import org.fastercode.idgenerator.core.util.IPUtil;
 import org.fastercode.idgenerator.core.util.MapUtil;
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -172,7 +173,7 @@ public class IDGenDistributed implements IDGenerator {
             String node = zkOnlinePath + "/" + this.ip + zkRunning;
             if (!this.zk.isExisted(node)) {
                 this.zk.persistEphemeral(node, String.valueOf(System.currentTimeMillis()));
-                log.info("分布式ID[{}] running-ping success.", config.getName());
+                log.info("分布式ID[{}] running-ping success. [{}]", config.getName(), node);
             }
         } catch (Exception e) {
             log.warn("分布式ID[{}] running-ping fail: {}", config.getName(), e.getMessage(), e);
@@ -197,20 +198,11 @@ public class IDGenDistributed implements IDGenerator {
 
     @Override
     public void close() {
-        try {
-            idWorkersBackUpScheduled.shutdown();
-            if (!idWorkersBackUpScheduled.awaitTermination(2000L, TimeUnit.MILLISECONDS)) {
-                idWorkersBackUpScheduled.shutdownNow();
-            }
-        } catch (Exception e) {
-            try {
-                idWorkersBackUpScheduled.shutdownNow();
-            } catch (Exception e1) {
-                // ignore
-            }
-        }
+        gracefulShutdownExecutor(runningPingScheduled, 1000L);
+        gracefulShutdownExecutor(idWorkersBackUpScheduled, 2000L);
         this.zk.close();
         this.idGeneratorRaw = null;
+        this.runningPingScheduled = null;
         this.idWorkersBackUpScheduled = null;
         this.hasInit.set(false);
 
@@ -342,6 +334,21 @@ public class IDGenDistributed implements IDGenerator {
         }
 
         return gap;
+    }
+
+    private static void gracefulShutdownExecutor(ExecutorService executor, long timeout) {
+        try {
+            executor.shutdown();
+            if (!executor.awaitTermination(timeout, TimeUnit.MILLISECONDS)) {
+                executor.shutdownNow();
+            }
+        } catch (Exception e) {
+            try {
+                executor.shutdownNow();
+            } catch (Exception e1) {
+                // ignore
+            }
+        }
     }
 
 }
