@@ -34,6 +34,7 @@ public class ZKTest {
             String node = "/" + IPUtil.getLocalAddress() + "/running";
             if (!zk.isExisted(node)) {
                 zk.persistEphemeral(node, String.valueOf(System.currentTimeMillis()));
+                log.info("running-ping success. [{}]", node);
             }
             Thread.sleep(1000);
         }
