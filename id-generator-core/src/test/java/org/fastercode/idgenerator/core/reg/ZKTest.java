@@ -30,7 +30,13 @@ public class ZKTest {
         ZookeeperRegistryCenter zk = new ZookeeperRegistryCenter(configuration);
         zk.init();
 
-        zk.persistEphemeral("/" + IPUtil.getLocalAddress() + "/running", String.valueOf(System.currentTimeMillis()));
+        for (int i = 0; i < 1000; i++) {
+            String node = "/" + IPUtil.getLocalAddress() + "/running";
+            if (!zk.isExisted(node)) {
+                zk.persistEphemeral(node, String.valueOf(System.currentTimeMillis()));
+            }
+            Thread.sleep(1000);
+        }
 
         zk.close();
     }

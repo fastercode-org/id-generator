@@ -57,6 +57,7 @@ public class IDGenDistributed implements IDGenerator {
     private IDGenerator idGeneratorRaw;
 
     private ScheduledExecutorService idWorkersBackUpScheduled;
+    private ScheduledExecutorService runningPingScheduled;
 
     private final AtomicBoolean hasInit = new AtomicBoolean(false);
 
@@ -137,12 +138,19 @@ public class IDGenDistributed implements IDGenerator {
 
             // sync to zk
             zk.persist(zkWorkersPath, JSON.toJSONString(map));
-            zk.persistEphemeral(zkOnlinePath + "/" + this.ip + zkRunning, String.valueOf(System.currentTimeMillis()));
 
         } finally {
             // release distributed-lock
             zk.unlock(lock);
         }
+
+        // start running ping scheduled
+        runningPingScheduled = Executors.newSingleThreadScheduledExecutor(
+                new ThreadFactoryBuilder()
+                        .setNameFormat("id-generator-running-ping-" + this.config.getName() + "-%d")
+                        .setDaemon(true).build()
+        );
+        runningPingScheduled.scheduleAtFixedRate(this::doRunningPingScheduled, 0, 1, TimeUnit.SECONDS);
 
         // start backup scheduled
         if (this.config.getWorkersBackUpInterval() > 0) {
@@ -159,6 +167,17 @@ public class IDGenDistributed implements IDGenerator {
         }
 
         log.info("分布式ID生成器[{}] init success.", this.config.getName());
+    }
+
+    private void doRunningPingScheduled() {
+        try {
+            String node = zkOnlinePath + "/" + this.ip + zkRunning;
+            if (!this.zk.isExisted(node)) {
+                this.zk.persistEphemeral(node, String.valueOf(System.currentTimeMillis()));
+            }
+        } catch (Exception e) {
+            log.warn("分布式ID[{}] running-ping 异常: {}", config.getName(), e.getMessage(), e);
+        }
     }
 
     private void doIdWorkersBackUpScheduled() {
