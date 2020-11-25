@@ -156,7 +156,7 @@ public class IDGenDistributedTest {
 
     }
 
-    private class ZookeeperRegistryCenterSpy extends ZookeeperRegistryCenter {
+    private static class ZookeeperRegistryCenterSpy extends ZookeeperRegistryCenter {
 
         public ZookeeperRegistryCenterSpy(ZookeeperConfiguration zkConfig) {
             super(zkConfig);
