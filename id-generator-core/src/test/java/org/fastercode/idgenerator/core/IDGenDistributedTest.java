@@ -194,7 +194,7 @@ public class IDGenDistributedTest {
 
         @Override
         public String getDirectly(String key) {
-            return null;
+            return "{}";
         }
 
         @Override
