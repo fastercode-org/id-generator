@@ -44,13 +44,13 @@ public class ZookeeperConfiguration {
      * 会话超时时间.
      * 单位毫秒.
      */
-    private int sessionTimeoutMilliseconds;
+    private int sessionTimeoutMilliseconds = 2000;
 
     /**
      * 连接超时时间.
      * 单位毫秒.
      */
-    private int connectionTimeoutMilliseconds;
+    private int connectionTimeoutMilliseconds = 2000;
 
     /**
      * 连接Zookeeper的权限令牌.
