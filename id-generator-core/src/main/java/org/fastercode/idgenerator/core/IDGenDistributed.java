@@ -187,6 +187,10 @@ public class IDGenDistributed implements IDGenerator {
         }
 
         try {
+            if (!this.zk.isExisted(zkWorkersPath)) {
+                return;
+            }
+
             String str = zk.getDirectly(zkWorkersPath);
             if (illegalBackupContent(str)) {
                 return;
