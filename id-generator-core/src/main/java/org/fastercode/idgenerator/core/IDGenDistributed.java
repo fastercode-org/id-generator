@@ -106,7 +106,7 @@ public class IDGenDistributed implements IDGenerator {
             // try to restore from backup-file
             if (!zk.isExisted(zkWorkersPath)) {
                 String backupContent = FileUtil.readFileContent(config.getWorkersBackUpFile());
-                if (!Strings.isNullOrEmpty(backupContent)) {
+                if (!illegalBackupContent(backupContent)) {
                     zk.persist(zkWorkersPath, backupContent);
                 }
             }
@@ -188,6 +188,10 @@ public class IDGenDistributed implements IDGenerator {
 
         try {
             String str = zk.getDirectly(zkWorkersPath);
+            if (illegalBackupContent(str)) {
+                return;
+            }
+
             FileUtil.writeFileContent(config.getWorkersBackUpFile(), str);
             if (log.isDebugEnabled()) {
                 log.debug("分布式ID[{}] 备份 WorkerID 成功 [{}]", config.getName(), config.getWorkersBackUpFile());
@@ -350,6 +354,10 @@ public class IDGenDistributed implements IDGenerator {
                 // ignore
             }
         }
+    }
+
+    protected static boolean illegalBackupContent(String str) {
+        return Strings.isNullOrEmpty(str) || !str.startsWith("{") || !str.endsWith("}");
     }
 
 }
