@@ -27,7 +27,7 @@ public class IDGenDistributedTest {
         IDGenDistributedConfig idConfig = new IDGenDistributedConfig();
         idConfig.setServerLists("serverList");
         idConfig.setNamespace("namespace");
-        idConfig.setWorkersBackUpFile("/tmp/x");
+        idConfig.setWorkersBackUpFile("/tmp/test_id_worker.json");
         idConfig.setWorkersBackUpInterval(1);
         idConfig.setMinWorkerID(301);
         idConfig.setMaxWorkerID(303);
