@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 /**
  * 分布式ID生成器
+ * http://id-generator.fastercode.org
+ *
  * @author huyaolong
  */
 public interface IDGenerator {

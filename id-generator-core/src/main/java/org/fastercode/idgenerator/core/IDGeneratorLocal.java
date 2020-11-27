@@ -17,6 +17,7 @@ import java.util.function.LongSupplier;
 
 /**
  * 订单号生成器
+ * http://id-generator.fastercode.org
  *
  * @author huyaolong
  */

@@ -29,6 +29,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * 分布式ID生成器
  * workerID 基于 zk 注册
  * 支持 zk 切换 (异步本地备份与切换更新)
+ * http://id-generator.fastercode.org
  *
  * @author huyaolong
  */
