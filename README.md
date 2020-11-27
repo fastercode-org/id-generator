@@ -19,7 +19,34 @@
 - **时钟回拨优化** 如果时钟回拨大于500ms, 生成ID时将抛出异常; 否则线程将挂起等待若干毫秒以确保生成正确的ID.
 ---
 
-## 使用
+## 使用: docker 快速构建
+
+```shell script
+# 克隆项目
+git clone https://github.com/fastercode-org/id-generator.git
+
+# 构建docker镜像
+sudo docker build --no-cache -t id-generator-app:v1 -f ./id-generator/docker/Dockerfile ./id-generator/docker
+
+# 运行
+export zkServerLists=Zookeeper地址
+sudo docker run -p 8080:8080 -v /tmp:/tmp id-generator-app:v1 \
+     java -Xms32m -Xmx32m -jar id-generator-app.jar --server.port=8080 \
+     --id-generator.serverLists=${zkServerLists} \
+     --id-generator.namespace=id_generator \
+     --id-generator.workersBackUpFile=/tmp/workers.bak \
+     --id-generator.workersBackUpInterval=60
+
+# 测试
+curl 'http://127.0.0.1:8080/fastercode/id-generator/generate'
+```
+
+##### 更多参数配置:
+
+- [IDGenDistributedConfig](https://github.com/fastercode-org/id-generator/blob/master/id-generator-core/src/main/java/org/fastercode/idgenerator/core/IDGenDistributedConfig.java)
+- [ZookeeperConfiguration](https://github.com/fastercode-org/id-generator/blob/master/id-generator-core/src/main/java/org/fastercode/idgenerator/core/reg/zookeeper/ZookeeperConfiguration.java)
+
+## 使用: spring 编码形式
 
 - 添加Maven仓库
 

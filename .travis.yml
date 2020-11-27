@@ -2,7 +2,7 @@ language: java
 sudo: false # faster builds
 
 env:
-  - CODECOV_TOKEN="1f7e4e8a-a8ac-4df7-b4d7-592e855b1ed9"
+  - CODECOV_TOKEN="7a4d21ed-0645-4212-bc66-b14184708d2c"
 
 jdk:
   - oraclejdk12
