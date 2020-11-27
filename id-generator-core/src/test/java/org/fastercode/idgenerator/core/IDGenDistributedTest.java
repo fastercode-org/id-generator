@@ -35,15 +35,19 @@ public class IDGenDistributedTest {
         idConfig.setSessionTimeoutMilliseconds(1);
         idConfig.setMaxRetries(0);
 
-        IDGenDistributed idGen = new IDGenDistributed(idConfig);
-        idGen.setZk(Mockito.spy(new ZookeeperRegistryCenterSpy(null)));
+        IDGenDistributed idGen1 = new IDGenDistributed(idConfig);
+        IDGenDistributed idGen2 = new IDGenDistributed(idConfig);
+        idGen1.setZk(Mockito.spy(new ZookeeperRegistryCenterSpy(null, true)));
+        idGen2.setZk(Mockito.spy(new ZookeeperRegistryCenterSpy(null, false)));
         try {
-            idGen.init();
+            idGen1.init();
+            idGen2.init();
             Thread.sleep(2000L);
         } catch (Exception ignore) {
             ignore.printStackTrace();
         }
-        idGen.close();
+        idGen1.close();
+        idGen2.close();
     }
 
     @Test
@@ -157,9 +161,11 @@ public class IDGenDistributedTest {
     }
 
     private static class ZookeeperRegistryCenterSpy extends ZookeeperRegistryCenter {
+        private final boolean t;
 
-        public ZookeeperRegistryCenterSpy(ZookeeperConfiguration zkConfig) {
+        public ZookeeperRegistryCenterSpy(ZookeeperConfiguration zkConfig, boolean t) {
             super(zkConfig);
+            this.t = t;
         }
 
         @Override
@@ -194,7 +200,7 @@ public class IDGenDistributedTest {
 
         @Override
         public String getDirectly(String key) {
-            return "{}";
+            return t ? "{}" : "";
         }
 
         @Override
@@ -254,7 +260,7 @@ public class IDGenDistributedTest {
 
         @Override
         public boolean isExisted(String key) {
-            return true;
+            return t;
         }
 
         @Override
