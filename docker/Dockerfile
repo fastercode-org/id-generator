@@ -1,6 +1,6 @@
 # sudo docker build --no-cache -t id-generator-app:v1 -f ./Dockerfile .
 
-FROM maven:3.6.3-openjdk-8
+FROM maven
 MAINTAINER huyaolong <mail@yaolong.net>
 
 VOLUME /tmp
