@@ -9,7 +9,7 @@
 
 ## 分布式id生成器 (workerID基于zk初始化)
 
-![](https://raw.githubusercontent.com/fastercode-org/id-generator/master/id-generator.jpg)
+![](https://cdn.yaolong.net/img/2021/05/id-generator.jpg)
 
 - **高性能** 生成ID过程不依赖任何三方组件。
 - **可用性** 分布式构建 / zk可中断 / 实例启动安全监测。
